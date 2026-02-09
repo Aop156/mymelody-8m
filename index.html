@@ -3,93 +3,118 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>8 Months 💗 My Melody</title>
+<title>For เพลง 🎀</title>
 
 <style>
 body{
   margin:0;
-  font-family:sans-serif;
   background:#ffe6f2;
+  font-family:sans-serif;
   text-align:center;
+  overflow:hidden;
+}
+
+/* กล่องของขวัญลอย */
+#gift{
+  position:absolute;
+  top:45%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  cursor:pointer;
+  animation: float 2s infinite ease-in-out;
+}
+@keyframes float{
+  0%{transform:translate(-50%,-50%) translateY(0);}
+  50%{transform:translate(-50%,-50%) translateY(-15px);}
+  100%{transform:translate(-50%,-50%) translateY(0);}
+}
+#gift img{ width:220px; }
+
+/* My Melody ตัวเต็ม */
+#melody{
+  position:absolute;
+  top:42%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(0);
+  transition:all 1s ease;
+}
+#melody.show{
+  transform:translate(-50%,-50%) scale(1);
+}
+#melody img{ width:220px; }
+
+#text{
+  position:absolute;
+  bottom:12%;
+  width:100%;
+  font-size:22px;
   color:#ff4da6;
 }
-.card{
-  background:white;
-  margin:80px auto;
-  padding:30px;
-  border-radius:25px;
-  width:90%;
-  max-width:420px;
-  box-shadow:0 10px 40px rgba(255,105,180,.3);
-}
-button{
-  padding:12px 28px;
-  border:none;
-  border-radius:25px;
-  font-size:18px;
-  margin:10px;
-  cursor:pointer;
-}
-.love{background:#ff66b2;color:white;}
-.no{background:#bbb;color:white;}
+
 .hidden{display:none;}
-img{
-  max-width:92%;
-  border-radius:18px;
-  margin-top:18px;
+
+/* สไลด์รูป */
+#story img{
+  width:80%;
+  border-radius:15px;
+  margin-top:20px;
 }
 </style>
 </head>
 <body>
 
-<audio id="bgm" src="song.mp3" loop></audio>
+<audio id="bgm" src="song.mp3"></audio>
 
-<div class="card" id="start">
-  <h1>ครบ 8 เดือนแล้วนะ 🎀</h1>
-  <p>ยังรักเค้ามั้ยยยย</p>
-  <button class="love" onclick="startStory()">LOVE</button>
-  <button class="no" onclick="endNow()">NO</button>
+<!-- กล่อง -->
+<div id="gift" onclick="openGift()">
+  <img src="https://i.imgur.com/9Q6QZ6G.png">
+  <p>แตะเพื่อเปิดของขวัญให้เพลง 🎁</p>
 </div>
 
-<div class="card hidden" id="story">
+<!-- My Melody -->
+<div id="melody">
+  <img src="https://i.imgur.com/3ZQ3Z9v.png">
+</div>
+
+<div id="text" class="hidden">
+  เพลงคนเก่งของเค้า 💗<br>มีอะไรอยากให้ดูนิดนึงนะ
+</div>
+
+<!-- สไลด์ -->
+<div id="story" class="hidden">
   <img id="slide" src="">
-  <p id="text"></p>
-</div>
-
-<div class="card hidden" id="end">
-  <h1>เค้างอนแล้วนะ 😿</h1>
+  <p id="caption"></p>
 </div>
 
 <script>
 const slides = [
-  {img:"photo1.jpg", text:"จากวันแรกที่เจอกัน"},
-  {img:"photo2.jpg", text:"กินด้วยกัน เที่ยวด้วยกัน"},
-  {img:"photo3.jpg", text:"หัวเราะเรื่องเดิม ๆ"},
-  {img:"photo4.jpg", text:"ทุกที่ที่ไป มีเธออยู่เสมอ"},
-  {img:"photo5.jpg", text:"ขอบคุณสำหรับ 8 เดือนนะ 💗"}
+  {img:"photo1.jpg", text:"ตั้งแต่วันแรกที่เราเจอกัน"},
+  {img:"photo2.jpg", text:"เพลงทำให้ทุกวันธรรมดา กลายเป็นวันพิเศษ"},
+  {img:"photo3.jpg", text:"รอยยิ้มของเพลง คือสิ่งที่เค้าชอบที่สุด"},
+  {img:"photo4.jpg", text:"ขอบคุณที่อยู่ข้างกันเสมอ"},
+  {img:"photo5.jpg", text:"8 เดือนแล้วนะเพลง… เค้ารักเพลงมากเลย 💗"}
 ];
 
 let i=0;
 
-function startStory(){
+function openGift(){
   document.getElementById('bgm').play();
-  document.getElementById('start').classList.add('hidden');
-  document.getElementById('story').classList.remove('hidden');
-  showSlide();
-}
+  document.getElementById('gift').classList.add('hidden');
+  document.getElementById('melody').classList.add('show');
+  document.getElementById('text').classList.remove('hidden');
 
-function endNow(){
-  document.getElementById('bgm').play();
-  document.getElementById('start').classList.add('hidden');
-  document.getElementById('end').classList.remove('hidden');
+  setTimeout(()=>{
+    document.getElementById('story').classList.remove('hidden');
+    showSlide();
+  },3000);
 }
 
 function showSlide(){
   if(i>=slides.length) return;
   document.getElementById('slide').src=slides[i].img;
-  document.getElementById('text').innerText=slides[i].text;
+  document.getElementById('caption').innerText=slides[i].text;
   i++;
-  setTimeout(showSlide,3000);
+  setTimeout(showSlide,3500);
 }
 </script>
 
